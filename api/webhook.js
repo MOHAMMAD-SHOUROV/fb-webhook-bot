@@ -1,20 +1,15 @@
-export default function handler(req, res) {
-  const VERIFY_TOKEN = "shourov123";
+app.get("/api/webhook", (req, res) => {
+  let VERIFY_TOKEN = "shourov123";
+  let mode = req.query["hub.mode"];
+  let token = req.query["hub.verify_token"];
+  let challenge = req.query["hub.challenge"];
 
-  if (req.method === "GET") {
-    const mode = req.query["hub.mode"];
-    const token = req.query["hub.verify_token"];
-    const challenge = req.query["hub.challenge"];
-
-    if (mode && token === VERIFY_TOKEN) {
+  if (mode && token) {
+    if (mode === "subscribe" && token === VERIFY_TOKEN) {
+      console.log("WEBHOOK_VERIFIED");
       res.status(200).send(challenge);
     } else {
       res.sendStatus(403);
     }
   }
-
-  if (req.method === "POST") {
-    console.log("Webhook received:", req.body);
-    res.status(200).send("EVENT_RECEIVED");
-  }
-                         }
+});
