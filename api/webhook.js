@@ -1,3 +1,9 @@
+export const config = {
+  api: {
+    bodyParser: true,
+  },
+};
+
 export default function handler(req, res) {
   if (req.method === 'GET') {
     const VERIFY_TOKEN = "shourov123";
